@@ -1,0 +1,20 @@
+version: '3'
+services:
+  ns2-with-docker:
+    build: .
+    image: ns2-with-docker
+    container_name: ns2-with-docker
+    environment:
+      - DISPLAY=docker.for.mac.localhost:0
+    ports:
+      - "8888:8888"
+    volumes:
+      - ../../../notebook:/notebook        # can be changed according to demand
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ../ns-2.35:/ns2/ns-2.35
+      - ../py-parser:/app/py-parser
+      - ../tools:/app/tools
+      - ./init/jupyter_notebook_config.py:/root/.jupyter/jupyter_notebook_config.py
+    restart: always
+    command: jupyter-lab --allow-root --ip=0.0.0.0 --port=8888
+    privileged: true
